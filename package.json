@@ -1,0 +1,21 @@
+{
+  "name": "uid-ops-backend",
+  "version": "1.1.0",
+  "description": "UID Ops Backend (Express + SQLite + SSE + Weekly Plan persistence)",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "npm rebuild better-sqlite3 --force"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "cors": "^2.8.5",
+    "exceljs": "^4.4.0",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": "20.17.0"
+  },
+  "license": "MIT"
+}
