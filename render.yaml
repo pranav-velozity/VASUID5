@@ -1,17 +1,20 @@
 services:
   - type: web
-    name: uid-ops-backend
+    name: velozity-backend
     env: node
-    buildCommand: "npm install"
-    startCommand: "node server.js"
+    branch: main
+    plan: free
+    buildCommand: npm ci
+    startCommand: node server.js
+    autoDeploy: true
     envVars:
-      - key: ALLOWED_ORIGIN
-        value: https://<your-netlify-site>.netlify.app
-      - key: DB_DIR
-        value: /var/data
-      - key: npm_config_build_from_source
-        value: "true"
-    disks:
-      - name: data
-        mountPath: /var/data
-        sizeGB: 1
+      - key: NODE_VERSION
+        value: 20.17.0
+      - key: ALLOWED_ORIGINS
+        value: https://vasdash.netlify.app,https://web-sandbox.oaiusercontent.com
+      - key: DB_PATH
+        value: /var/data/data.sqlite
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 1

@@ -1,21 +1,27 @@
-# UID Ops Backend (Render-ready)
+# velOzity Backend
 
-## Run locally
+Express + SQLite backend for the velOzity UI.
+
+## Endpoints
+- `GET /health` → `{ ok: true }`
+- `GET /plan/weeks/:weekStart` → `[{ po_number, sku_code, target_qty }, ...]`
+- `POST /plan/weeks/:weekStart` body = array above → upsert
+- `GET /records?from=YYYY-MM-DD&to=YYYY-MM-DD&status=complete&limit=50000` → `{ records: [...] }`
+- `POST /records` body = `{ po_number, sku_code, date_local, status? }`
+- `POST /export/summary.docx` body = `{ weekStart, weekEnd, logoDataURL? }` → downloads `.docx`
+
+## Local dev
 ```bash
-npm install
+npm ci
 npm start
-# http://localhost:4000
+# defaults: PORT=3000, DB_PATH=./data.sqlite, ALLOWED_ORIGINS=* (allow all)
 ```
 
-## Deploy to Render
-- Web Service root: this folder
-- Build command: `npm install`
-- Start command: `node server.js`
-- **Environment variables**:
-  - `ALLOWED_ORIGIN` = `https://<your-netlify-site>.netlify.app`  (exact origin; or `*` for dev)
-  - `DB_DIR` = `/var/data`  (ensure a Disk is mounted here)
-  - `npm_config_build_from_source` = `true`  (forces native rebuild)
-- **Disks**: Add a Disk and mount it at `/var/data`
-- Node version is pinned via `.nvmrc` and `engines` to `20.17.0`.
-
-If you hit native module errors for `better-sqlite3`, clear build cache and redeploy.
+## Render deploy
+1. Push this folder to GitHub.
+2. Render → **New Web Service** → connect repo.
+3. Build: `npm ci` • Start: `node server.js`.
+4. Env vars:
+   - `NODE_VERSION=20.17.0`
+   - `ALLOWED_ORIGINS=https://vasdash.netlify.app,https://web-sandbox.oaiusercontent.com`
+   - `DB_PATH=/var/data/data.sqlite` (plus attach a disk mounted at `/var/data`)

@@ -1,15 +1,5 @@
-node_modules/
-npm-debug.log*
-yarn.lock
-pnpm-lock.yaml
-
-# SQLite data (use Render Disk)
-data/
-*.sqlite
-*.sqlite-journal
-*.db
-*.db-journal
-
-# OS
+node_modules
+*.log
+data.sqlite
 .DS_Store
-Thumbs.db
+.env
